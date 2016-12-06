@@ -10,6 +10,7 @@ GameObject:
   - 4: {fileID: 422942}
   - 212: {fileID: 21294666}
   - 114: {fileID: 11462480}
+  - 114: {fileID: 11442174}
   m_Layer: 0
   m_Name: Cloud Sprite
   m_TagString: Untagged
@@ -29,6 +30,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!114 &11442174
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 121752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ba53fb68cd504e1e82a07b1128b5e8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rot: {x: 0, y: 0, z: 20}
+  _random: 1
 --- !u!114 &11462480
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -111,6 +125,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_Color.a
       value: .303000003
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _rot.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _rot.z
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
