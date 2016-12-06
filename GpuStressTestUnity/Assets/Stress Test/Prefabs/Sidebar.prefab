@@ -1624,7 +1624,7 @@ MonoBehaviour:
   _countText: {fileID: 11477932}
   _size: {x: 10, y: 10, z: 10}
   _padding: {x: 5, y: 5, z: 10}
-  _offset: {x: 174.300003, y: -22.3999996, z: 0}
+  _offset: {x: 38, y: .300000012, z: -562}
 --- !u!114 &11427482
 MonoBehaviour:
   m_ObjectHideFlags: 1
