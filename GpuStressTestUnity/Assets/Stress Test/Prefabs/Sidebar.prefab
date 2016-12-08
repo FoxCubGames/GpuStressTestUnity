@@ -726,7 +726,7 @@ GameObject:
   - 114: {fileID: 11439024}
   - 114: {fileID: 11481186}
   m_Layer: 5
-  m_Name: Text
+  m_Name: FPS
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1039,7 +1039,7 @@ GameObject:
   - 222: {fileID: 22227044}
   - 114: {fileID: 11438730}
   m_Layer: 5
-  m_Name: Particle Stream
+  m_Name: particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1927,7 +1927,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 22416954}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 100
+  m_MaxValue: 60
   m_WholeNumbers: 1
   m_Value: 0
   m_OnValueChanged:
@@ -2691,7 +2691,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_IgnoreLayout: 0
   m_MinWidth: -1
-  m_MinHeight: -1
+  m_MinHeight: 32
   m_PreferredWidth: -1
   m_PreferredHeight: 32
   m_FlexibleWidth: -1
@@ -3294,7 +3294,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Particle Stream
+  m_Text: Particles
 --- !u!114 &11457622
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3348,7 +3348,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 22409186}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 500
+  m_MaxValue: 150
   m_WholeNumbers: 1
   m_Value: 0
   m_OnValueChanged:
@@ -3506,7 +3506,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 22430722}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 300
+  m_MaxValue: 100
   m_WholeNumbers: 1
   m_Value: 0
   m_OnValueChanged:
@@ -3845,7 +3845,7 @@ MonoBehaviour:
     m_MinSize: 10
     m_MaxSize: 40
     m_Alignment: 4
-    m_RichText: 1
+    m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
