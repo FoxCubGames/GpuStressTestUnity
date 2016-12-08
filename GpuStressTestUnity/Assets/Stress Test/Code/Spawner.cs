@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,6 +12,16 @@ public class Spawner : MonoBehaviour {
 	public Vector3 _offset;
 
 	Stack<GameObject> _gos = new Stack<GameObject>();
+
+	int _maxSpawn;
+	Coroutine _autoSpawnCor;
+	Slider _slider;
+
+	void Awake() {
+		GetComponentInChildren<Toggle>().onValueChanged.AddListener(OnToggleAutoSpawnChanged);
+		_slider = GetComponentInChildren<Slider>();
+		_maxSpawn = (int)_slider.maxValue;
+	}
 
 	public void UpdateObjects(float num) {
 		while (_gos.Count > num) {
@@ -36,4 +47,70 @@ public class Spawner : MonoBehaviour {
 		}
 		_countText.text = _gos.Count.ToString();
 	}
+
+	void OnToggleAutoSpawnChanged(bool val) {
+		if (val) {
+			Debug.Log("auto spawn: on");
+			_autoSpawnCor = StartCoroutine(AutoSpawnCor());
+		} else {
+			if (_autoSpawnCor != null) {
+				Debug.Log("auto spawn: off");
+				StopCoroutine(_autoSpawnCor);
+				_autoSpawnCor = null;
+			}
+		}
+	}
+
+	IEnumerator AutoSpawnCor() {
+		int step = 0;
+		float stepSize = .25f;
+		var fps = FpsDisplay._instance;
+
+		while (true) {
+			int currentSpawn = (int)_slider.value;
+			Debug.Log("auto spawn: step=" + step + ", stepSize=" + (stepSize * (float)_maxSpawn).ToString("N0") + ", spawned=" + currentSpawn + ", fps=" + fps._Fps.ToString("N2"));
+
+			// did we find 30 fps?
+			if (fps._Fps >= 30f && fps._Fps < 30.5f) {
+				Debug.Log("auto spawn: found fps!");
+				GetComponentInChildren<Toggle>().isOn = false;
+			}
+
+			// are we maxxed out and still above 30 fps?
+			else if (fps._Fps > 30.5f && currentSpawn >= _maxSpawn) {
+				// raise the max spawn
+				_maxSpawn = Mathf.RoundToInt((float)_maxSpawn * 1.25f);
+				_slider.maxValue = _maxSpawn;
+				Debug.Log("auto spawn: maxxed out! raising max to: " + _maxSpawn);
+			}
+
+			// are we minned out and still below 30 fps?
+			else if (fps._Fps < 30f && currentSpawn <= 0) {
+				Debug.Log("auto spawn: minned out but already below 30 fps!");
+				GetComponentInChildren<Toggle>().isOn = false;
+			}
+
+			// if we get here, we either need to spawn more or less
+			// should we spawn more?
+			bool spawnMore = (fps._Fps > 30.5f);
+			// if we're still spawning more (and never went over 30 fps), we keep our step size at 0
+			if (spawnMore && step == 0) {
+				// dont change step or step size
+				Debug.Log("auto spawn: still trying to find the breaking point...");
+			} else {
+				// reduce stepsize by half
+				step++;
+				stepSize = stepSize * .5f;
+				Debug.Log("auto spawn: new step size: " + stepSize.ToString("N6") + ", spawnMore=" + spawnMore);
+			}
+
+			// now, spawn more or less
+			_slider.value += (float)_maxSpawn * stepSize * (spawnMore ? 1f : -1f);
+
+			// wait 1 second, then wait for the next fps update
+			yield return new WaitForSeconds(1f);
+			yield return StartCoroutine(fps.WaitForUpdate());
+		}
+	}
+
 }
