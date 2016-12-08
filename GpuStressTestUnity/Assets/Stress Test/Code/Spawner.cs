@@ -6,12 +6,19 @@ using UnityEngine.UI;
 public class Spawner : MonoBehaviour {
 
 	public GameObject _prefab;
+
+	/// <summary>
+	/// this prefab will only get spawned once
+	/// </summary>
+	public GameObject _prefabStatic;
+
 	public Text _countText;
 	public Vector3 _size;
 	public Vector3 _padding;
 	public Vector3 _offset;
 
 	Stack<GameObject> _gos = new Stack<GameObject>();
+	GameObject _goStatic;
 
 	int _maxSpawn;
 	Coroutine _autoSpawnCor;
@@ -24,12 +31,25 @@ public class Spawner : MonoBehaviour {
 	}
 
 	public void UpdateObjects(float num) {
+		if (_prefabStatic != null) {
+			if (num == 0 && _goStatic != null) {
+				Destroy(_goStatic);
+				_goStatic = null;
+			}
+			if (num > 0 && _goStatic == null) {
+				_goStatic = Instantiate(_prefabStatic);
+			}
+		}
+
 		while (_gos.Count > num) {
 			Destroy(_gos.Pop());
 		}
 
 		while (_gos.Count < num) {
 			var go = Instantiate(_prefab);
+			if (_goStatic != null) {
+				go.transform.SetParent(_goStatic.transform);
+			}
 			var count = 1;
 			int x = 0, y = 0, z = 0;
 			for (z = 0; z < _size.z; z++) {
@@ -42,7 +62,7 @@ public class Spawner : MonoBehaviour {
 				}
 				if (count >= _gos.Count) break;
 			}
-			go.transform.position = _offset + new Vector3(x * _padding.x, y * _padding.y, z * _padding.z);
+			go.transform.localPosition = _offset + new Vector3(x * _padding.x, y * _padding.y, z * _padding.z);
 			_gos.Push(go);
 		}
 		_countText.text = _gos.Count.ToString();
