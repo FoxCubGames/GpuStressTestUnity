@@ -44,6 +44,8 @@ public class Spawner : MonoBehaviour {
 		while (_gos.Count > num) {
 			Destroy(_gos.Pop());
 		}
+		Resources.UnloadUnusedAssets();
+		System.GC.Collect();
 
 		while (_gos.Count < num) {
 			var go = Instantiate(_prefab);

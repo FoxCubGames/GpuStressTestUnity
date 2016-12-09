@@ -30,6 +30,7 @@ public class FpsDisplay : MonoBehaviour {
 
 	void Awake() {
 		_instance = this;
+		Application.targetFrameRate = 60;
 	}
 
 	void Update() {
