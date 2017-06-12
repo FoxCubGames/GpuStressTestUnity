@@ -44,30 +44,39 @@ public class Spawner : MonoBehaviour {
 		while (_gos.Count > num) {
 			Destroy(_gos.Pop());
 		}
-		Resources.UnloadUnusedAssets();
-		System.GC.Collect();
 
 		while (_gos.Count < num) {
 			var go = Instantiate(_prefab);
 			if (_goStatic != null) {
 				go.transform.SetParent(_goStatic.transform);
 			}
-			var count = 1;
+			var idx = -1;
+			var targetIdx = _gos.Count;
 			int x = 0, y = 0, z = 0;
 			for (z = 0; z < _size.z; z++) {
 				for (y = 0; y < _size.y; y++) {
 					for (x = 0; x < _size.x; x++) {
-						count++;
-						if (count >= _gos.Count) break;
+						idx++;
+						if (idx >= targetIdx) break;
 					}
-					if (count >= _gos.Count) break;
+					if (idx >= targetIdx) break;
 				}
-				if (count >= _gos.Count) break;
+				if (idx >= targetIdx) break;
 			}
-			go.transform.localPosition = _offset + new Vector3(x * _padding.x, y * _padding.y, z * _padding.z);
+			//Debug.Log("count=" + idx + ", x=" + x + ", y=" + y + ", z=" + z);
+			var pos = _offset + new Vector3(x * _padding.x, y * _padding.y, z * _padding.z);
+			var setter = go.GetComponent<SpawnedObjectPositionSetter>();
+			if (setter != null) {
+				setter.SetPosition(pos);
+			} else {
+				go.transform.position = pos;
+			}
 			_gos.Push(go);
 		}
 		_countText.text = _gos.Count.ToString();
+
+		Resources.UnloadUnusedAssets();
+		System.GC.Collect();
 	}
 
 	void OnToggleAutoSpawnChanged(bool val) {

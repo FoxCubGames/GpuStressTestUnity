@@ -12,4 +12,11 @@ public class Sidebar : MonoBehaviour {
 		_alphaText.text = alpha.ToString();
 	}
 
+	void Update() {
+		if (Time.frameCount % 30 == 0) {
+			Resources.UnloadUnusedAssets();
+			System.GC.Collect();
+		}
+	}
+
 }
