@@ -1,8 +1,4 @@
-#if !UNITY_EDITOR || FCLOG
-using Debug = FC.Debug;
-#else
-using Debug = UnityEngine.Debug;
-#endif
+
 
 // Copyright (C) 2014 - 2015 Stephan Bouchard - All Rights Reserved
 // This code can only be used under the standard Unity Asset Store End User License Agreement
