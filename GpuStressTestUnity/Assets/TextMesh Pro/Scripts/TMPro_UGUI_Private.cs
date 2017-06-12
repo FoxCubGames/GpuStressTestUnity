@@ -548,6 +548,10 @@ namespace TMPro
                 m_maskingMaterial = null;
             }
 
+			// clean up mesh
+	        if (m_mesh != null)
+		        DestroyImmediate(m_mesh);
+
             // Clean up any material instances we may have created.
             if (m_fontMaterial != null)
                 DestroyImmediate(m_fontMaterial);
