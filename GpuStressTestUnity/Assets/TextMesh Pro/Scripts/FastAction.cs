@@ -1,8 +1,4 @@
-#if !UNITY_EDITOR || FCLOG
-using Debug = FC.Debug;
-#else
-using Debug = UnityEngine.Debug;
-#endif
+
 
 ﻿// This improved method of handling the various events used by TextMesh Pro was contributed by TowerOfBricks aka Aron Granberg.
 
